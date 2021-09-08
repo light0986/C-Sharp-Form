@@ -1,0 +1,10 @@
+C:\Users\user\Desktop\Auto_Fishing\Auto_Fishing\bin\Debug\Auto_Fishing.exe.config
+C:\Users\user\Desktop\Auto_Fishing\Auto_Fishing\bin\Debug\Auto_Fishing.exe
+C:\Users\user\Desktop\Auto_Fishing\Auto_Fishing\bin\Debug\Auto_Fishing.pdb
+C:\Users\user\Desktop\Auto_Fishing\Auto_Fishing\obj\Debug\Auto_Fishing.csproj.AssemblyReference.cache
+C:\Users\user\Desktop\Auto_Fishing\Auto_Fishing\obj\Debug\Auto_Fishing.Properties.Resources.resources
+C:\Users\user\Desktop\Auto_Fishing\Auto_Fishing\obj\Debug\Auto_Fishing.csproj.GenerateResource.cache
+C:\Users\user\Desktop\Auto_Fishing\Auto_Fishing\obj\Debug\Auto_Fishing.csproj.CoreCompileInputs.cache
+C:\Users\user\Desktop\Auto_Fishing\Auto_Fishing\obj\Debug\Auto_Fishing.exe
+C:\Users\user\Desktop\Auto_Fishing\Auto_Fishing\obj\Debug\Auto_Fishing.pdb
+C:\Users\user\Desktop\Auto_Fishing\Auto_Fishing\obj\Debug\Auto_Fishing.Form1.resources
