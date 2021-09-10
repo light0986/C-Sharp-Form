@@ -30,6 +30,8 @@ namespace Auto_Fishing
         private static Bitmap bitmap2; //pic2用的
         private static Size s; //畫布的大小定義
         private static int count = 0; //時間誤差
+        private static int count2 = 0; //顏色跑掉校正回歸
+        private static Color first_Color;
 
         CGlobalKeyboardHook _kbdHook = new CGlobalKeyboardHook(); //Class1
 
@@ -98,6 +100,7 @@ namespace Auto_Fishing
                     {
                         label3.Text = "有";
                         count = 0;
+                        count2 = 0;
                     }
                     else
                     {
@@ -151,7 +154,7 @@ namespace Auto_Fishing
             return b;
         }
 
-        private bool ColorAEqualColorB(Color colorA, Color colorB, byte errorRange = 15) //找到的顏色,標準的顏色,容許誤差
+        private bool ColorAEqualColorB(Color colorA, Color colorB, byte errorRange = 10) //找到的顏色,標準的顏色,容許誤差
         {
             return colorA.A <= colorB.A + errorRange && colorA.A >= colorB.A - errorRange &&
                 colorA.R <= colorB.R + errorRange && colorA.R >= colorB.R - errorRange &&
@@ -166,7 +169,8 @@ namespace Auto_Fishing
             {
                 if (e.Button == MouseButtons.Left) //必須為左鍵
                 {
-                    pictureBox2.BackColor = bitmap2.GetPixel(e.X, e.Y);
+                    first_Color = bitmap2.GetPixel(e.X, e.Y);
+                    pictureBox2.BackColor = first_Color;
                     label4.Text = "A=" + pictureBox2.BackColor.A.ToString() + ",R=" + pictureBox2.BackColor.R.ToString() + ",G=" + pictureBox2.BackColor.G.ToString() + ",B=" + pictureBox2.BackColor.B.ToString();
                 }
             }
@@ -178,7 +182,8 @@ namespace Auto_Fishing
             {
                 if (e.Button == MouseButtons.Left) //必須為左鍵
                 {
-                    pictureBox2.BackColor = bitmap2.GetPixel(e.X, e.Y);
+                    first_Color = bitmap2.GetPixel(e.X, e.Y);
+                    pictureBox2.BackColor = first_Color;
                     label4.Text = "A=" + pictureBox2.BackColor.A.ToString() + ",R=" + pictureBox2.BackColor.R.ToString() + ",G=" + pictureBox2.BackColor.G.ToString() + ",B=" + pictureBox2.BackColor.B.ToString();
                 }
             }
@@ -235,6 +240,7 @@ namespace Auto_Fishing
             if (label3.Text == "有")
             {
                 count = 0; //時間誤差歸零
+                count2 = 0;
                 timer2.Enabled = false; //自我關閉
             }
             else
@@ -246,6 +252,11 @@ namespace Auto_Fishing
                 else if (comboBox1.Text == "左鍵")
                 {
                     mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+                }
+                count2++;
+                if(count2 == 5) //4次拋竿皆無
+                {
+                    pictureBox2.BackColor = first_Color;
                 }
             }
         }
