@@ -65,6 +65,9 @@ namespace Auto_Fishing
             comboBox1.Items.Add("右鍵");
             comboBox1.Items.Add("左鍵");
             comboBox1.SelectedIndex = 0;
+
+            bitmap2 = new Bitmap(global::Auto_Fishing.Properties.Resources.IMG_1833,pictureBox3.Size.Width, pictureBox3.Size.Height); //內建圖檔
+            pictureBox3.Image = bitmap2;//防呆
         }
 
         private void timer1_click(object sender, EventArgs e) //螢幕截圖 每100毫秒計算一次
@@ -155,7 +158,7 @@ namespace Auto_Fishing
 
         private void M_D(object sender, MouseEventArgs e) //pic2按下時
         {
-            if(bitmap2 != null)
+            if (bitmap2 != null)
             {
                 if (e.Button == MouseButtons.Left) //必須為左鍵
                 {
@@ -241,7 +244,7 @@ namespace Auto_Fishing
             }
         }
 
-        private void F_Closing(object sender, FormClosedEventArgs e) //關閉時，沒有意義，寫爽的
+        private void F_Closing(object sender, FormClosedEventArgs e) //關閉時timer1跟2都停止，沒有意義，寫爽的
         {
             timer1.Enabled = false;
             timer2.Enabled = false;

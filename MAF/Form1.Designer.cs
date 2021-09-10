@@ -113,7 +113,6 @@ namespace Auto_Fishing
             // 
             // pictureBox3
             // 
-            this.pictureBox3.Image = global::Auto_Fishing.Properties.Resources.IMG_1833;
             this.pictureBox3.Location = new System.Drawing.Point(450, 12);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(400, 400);
