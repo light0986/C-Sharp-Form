@@ -15,11 +15,10 @@
 7. 「Auto_Fishing」: pictrueBox2的截圖上，點擊想成為判定標準的顏色區塊。
    
 8. 點擊後，你會看到下方白色區塊變色，他就是Golden Simple
-   (判定為Golden Simple的ARGB+-5的區塊，所以請自行修正，或許未來我會寫一個Machine learning版本的)
    
-9. 色塊上方你會看到一個「有」與「無」的label.text在變換
+9. Golden Simple旁你會看到一個「有」或「無」的label.text
 
-10.只要pictrueBox1上找不到該Golden Simple的Pixel，label就會改成無。反之為有。
+10.只要pictrueBox1上找不到該Golden Simple的Color，label就會改成無。反之為有。
    (這時候你可以調整hScrollBar跟vScrollBar試試)
 
 11.「Minecraft」: 按下CTRL+F11，就能開始你的釣魚工作了。
@@ -31,9 +30,8 @@
     觀念1: ARGB單值為0-255
     觀念2: 誤差範圍判斷式分兩種，誤差大與誤差小，先執行誤差小，再執行誤差大的。
     觀念3: 90%準確率才能作為AI使用，100-90=10，而255的10%=25，所以誤差範圍在ARGB各25內的都算合理。
-    觀念4: 鎖定目標必須與其他環境顏色差異巨大。
+    觀念4: 鎖定目標必須與其他環境顏色差異巨大。否則Golden Simple會被帶走
 
-14.Minecraft的整體顏色，會隨著光亮度改變ARGB，誤差個人掌握為最大20，最小10。
-   所以微小的變化(誤差10以內)，會改變Golden simple。瞬間的大變化(超過20誤差)，才會自動收竿，
+14.Minecraft的整體顏色，會隨著光亮度改變ARGB。
 
 15.停止工作，工作中，再一次按下CTRL+F11就可以了。
