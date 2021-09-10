@@ -138,16 +138,30 @@ namespace Auto_Fishing
             {
                 for(int i = 0; i < bit.Width; i++)
                 {
-                    if(ColorAEqualColorB(bit.GetPixel(i, j), pictureBox2.BackColor)) //個別pixel判斷
+                    if (ColorAEqualColorB_e5(bit.GetPixel(i, j), pictureBox2.BackColor)) //machine_learning
+                    {
+                        pictureBox2.BackColor = bit.GetPixel(i, j);
+                    }
+                    if (ColorAEqualColorB(bit.GetPixel(i, j), pictureBox2.BackColor)) //個別pixel判斷
                     {
                         b = true;
+                        break;
                     }
                 }
             }
             return b;
         }
 
-        private bool ColorAEqualColorB(Color colorA, Color colorB, byte errorRange = 10) //找到的顏色,標準的顏色,容許誤差
+        private bool ColorAEqualColorB(Color colorA, Color colorB, byte errorRange = 20) //找到的顏色,標準的顏色,容許誤差
+        {
+            return colorA.A <= colorB.A + errorRange && colorA.A >= colorB.A - errorRange &&
+                colorA.R <= colorB.R + errorRange && colorA.R >= colorB.R - errorRange &&
+                colorA.G <= colorB.G + errorRange && colorA.G >= colorB.G - errorRange &&
+                colorA.B <= colorB.B + errorRange && colorA.B >= colorB.B - errorRange;
+
+        }
+
+        private bool ColorAEqualColorB_e5(Color colorA, Color colorB, byte errorRange = 10) //找到的顏色,標準的顏色,容許誤差
         {
             return colorA.A <= colorB.A + errorRange && colorA.A >= colorB.A - errorRange &&
                 colorA.R <= colorB.R + errorRange && colorA.R >= colorB.R - errorRange &&
