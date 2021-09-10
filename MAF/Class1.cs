@@ -20,11 +20,10 @@ namespace CopyAndPaste
         [DllImport("user32.dll")]
         static extern short GetKeyState(int nCode);
         [DllImport("kernel32.dll")]
-        static extern IntPtr LoadLibrary(string IpFileName);   // 라이브러리 등록
+        static extern IntPtr LoadLibrary(string IpFileName);
 
-        public delegate int keyboardHookProc(int code, int wParam, ref keyboardHookStruct IParam);     // callback Delegate
+        public delegate int keyboardHookProc(int code, int wParam, ref keyboardHookStruct IParam);
 
-        // keyboardHookStruct 구조체 정의
         public struct keyboardHookStruct
         {
             public int vkCode;
