@@ -140,11 +140,11 @@ namespace Auto_Fishing
                 {
                     if (ColorAEqualColorB_e5(bit.GetPixel(i, j), pictureBox2.BackColor)) //machine_learning
                     {
-                        pictureBox2.BackColor = bit.GetPixel(i, j);
+                        pictureBox2.BackColor = bit.GetPixel(i, j); //改變GoldenSample
                     }
                     if (ColorAEqualColorB(bit.GetPixel(i, j), pictureBox2.BackColor)) //個別pixel判斷
                     {
-                        b = true;
+                        b = true; 
                         break;
                     }
                 }
