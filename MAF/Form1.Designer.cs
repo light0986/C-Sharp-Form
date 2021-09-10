@@ -44,6 +44,7 @@ namespace Auto_Fishing
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -61,7 +62,7 @@ namespace Auto_Fishing
             // 
             // timer1
             // 
-            this.timer1.Interval = 16;
+            this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_click);
             // 
             // button1
@@ -96,11 +97,11 @@ namespace Auto_Fishing
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(616, 444);
+            this.label2.Location = new System.Drawing.Point(611, 445);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(71, 15);
+            this.label2.Size = new System.Drawing.Size(76, 15);
             this.label2.TabIndex = 8;
-            this.label2.Text = "鎖定顏色:";
+            this.label2.Text = "牠叫Mui仔";
             // 
             // vScrollBar1
             // 
@@ -112,7 +113,7 @@ namespace Auto_Fishing
             // 
             // pictureBox3
             // 
-            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
+            this.pictureBox3.Image = global::Auto_Fishing.Properties.Resources.IMG_1833;
             this.pictureBox3.Location = new System.Drawing.Point(450, 12);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(400, 400);
@@ -135,7 +136,7 @@ namespace Auto_Fishing
             // 
             // timer2
             // 
-            this.timer2.Interval = 2000;
+            this.timer2.Interval = 1500;
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
             // comboBox1
@@ -180,11 +181,21 @@ namespace Auto_Fishing
             0});
             this.numericUpDown1.ValueChanged += new System.EventHandler(this.num_vc);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(699, 421);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(22, 15);
+            this.label3.TabIndex = 19;
+            this.label3.Text = "無";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(862, 479);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBox1);
@@ -201,6 +212,7 @@ namespace Auto_Fishing
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Mincraft Auto Fishing -- by light0986";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.F_Closing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_D);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -227,6 +239,7 @@ namespace Auto_Fishing
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Label label3;
     }
 }
 
