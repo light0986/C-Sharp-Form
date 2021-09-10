@@ -68,6 +68,7 @@ namespace Auto_Fishing
 
             bitmap2 = new Bitmap(global::Auto_Fishing.Properties.Resources.IMG_1833,pictureBox3.Size.Width, pictureBox3.Size.Height); //內建圖檔
             pictureBox3.Image = bitmap2;//防呆
+            label4.Text = "A=" + pictureBox2.BackColor.A.ToString() + ",R=" + pictureBox2.BackColor.R.ToString()+ ",G=" + pictureBox2.BackColor.G.ToString()+ ",B=" + pictureBox2.BackColor.B.ToString();
         }
 
         private void timer1_click(object sender, EventArgs e) //螢幕截圖 每100毫秒計算一次
@@ -102,7 +103,7 @@ namespace Auto_Fishing
                     {
                         label3.Text = "無";
                         count++;
-                        if (count == 5) // 連續5個100毫秒做判定為不存在
+                        if (count == 4) // 連續5個100毫秒做判定為不存在
                         {
                             if (timer2.Enabled == false) //當timer2不在使用狀態，避免每0,5秒拋竿一次
                             {
@@ -138,13 +139,11 @@ namespace Auto_Fishing
             {
                 for(int i = 0; i < bit.Width; i++)
                 {
-                    if (ColorAEqualColorB_e5(bit.GetPixel(i, j), pictureBox2.BackColor)) //machine_learning
-                    {
-                        pictureBox2.BackColor = bit.GetPixel(i, j); //改變GoldenSample
-                    }
                     if (ColorAEqualColorB(bit.GetPixel(i, j), pictureBox2.BackColor)) //個別pixel判斷
                     {
-                        b = true; 
+                        pictureBox2.BackColor = bit.GetPixel(i, j);
+                        label4.Text = "A=" + pictureBox2.BackColor.A.ToString() + ",R=" + pictureBox2.BackColor.R.ToString() + ",G=" + pictureBox2.BackColor.G.ToString() + ",B=" + pictureBox2.BackColor.B.ToString();
+                        b = true;
                         break;
                     }
                 }
@@ -152,16 +151,7 @@ namespace Auto_Fishing
             return b;
         }
 
-        private bool ColorAEqualColorB(Color colorA, Color colorB, byte errorRange = 20) //找到的顏色,標準的顏色,容許誤差
-        {
-            return colorA.A <= colorB.A + errorRange && colorA.A >= colorB.A - errorRange &&
-                colorA.R <= colorB.R + errorRange && colorA.R >= colorB.R - errorRange &&
-                colorA.G <= colorB.G + errorRange && colorA.G >= colorB.G - errorRange &&
-                colorA.B <= colorB.B + errorRange && colorA.B >= colorB.B - errorRange;
-
-        }
-
-        private bool ColorAEqualColorB_e5(Color colorA, Color colorB, byte errorRange = 10) //找到的顏色,標準的顏色,容許誤差
+        private bool ColorAEqualColorB(Color colorA, Color colorB, byte errorRange = 15) //找到的顏色,標準的顏色,容許誤差
         {
             return colorA.A <= colorB.A + errorRange && colorA.A >= colorB.A - errorRange &&
                 colorA.R <= colorB.R + errorRange && colorA.R >= colorB.R - errorRange &&
@@ -177,6 +167,7 @@ namespace Auto_Fishing
                 if (e.Button == MouseButtons.Left) //必須為左鍵
                 {
                     pictureBox2.BackColor = bitmap2.GetPixel(e.X, e.Y);
+                    label4.Text = "A=" + pictureBox2.BackColor.A.ToString() + ",R=" + pictureBox2.BackColor.R.ToString() + ",G=" + pictureBox2.BackColor.G.ToString() + ",B=" + pictureBox2.BackColor.B.ToString();
                 }
             }
         }
@@ -188,6 +179,7 @@ namespace Auto_Fishing
                 if (e.Button == MouseButtons.Left) //必須為左鍵
                 {
                     pictureBox2.BackColor = bitmap2.GetPixel(e.X, e.Y);
+                    label4.Text = "A=" + pictureBox2.BackColor.A.ToString() + ",R=" + pictureBox2.BackColor.R.ToString() + ",G=" + pictureBox2.BackColor.G.ToString() + ",B=" + pictureBox2.BackColor.B.ToString();
                 }
             }
         }

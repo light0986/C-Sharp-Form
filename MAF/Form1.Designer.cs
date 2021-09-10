@@ -45,6 +45,7 @@ namespace Auto_Fishing
             this.label1 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -67,9 +68,9 @@ namespace Auto_Fishing
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(450, 418);
+            this.button1.Location = new System.Drawing.Point(450, 442);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(123, 49);
+            this.button1.Size = new System.Drawing.Size(123, 25);
             this.button1.TabIndex = 2;
             this.button1.Text = "截圖(Ctrl+F12)";
             this.button1.UseVisualStyleBackColor = true;
@@ -88,7 +89,7 @@ namespace Auto_Fishing
             // 
             this.pictureBox2.BackColor = System.Drawing.Color.White;
             this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox2.Location = new System.Drawing.Point(693, 439);
+            this.pictureBox2.Location = new System.Drawing.Point(665, 442);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(28, 23);
             this.pictureBox2.TabIndex = 7;
@@ -97,7 +98,7 @@ namespace Auto_Fishing
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(611, 445);
+            this.label2.Location = new System.Drawing.Point(579, 447);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(76, 15);
             this.label2.TabIndex = 8;
@@ -124,9 +125,9 @@ namespace Auto_Fishing
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(727, 418);
+            this.button2.Location = new System.Drawing.Point(727, 442);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(123, 49);
+            this.button2.Size = new System.Drawing.Size(123, 25);
             this.button2.TabIndex = 14;
             this.button2.Text = "開始(Ctrl+F11)";
             this.button2.UseVisualStyleBackColor = true;
@@ -183,17 +184,27 @@ namespace Auto_Fishing
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(699, 421);
+            this.label3.Location = new System.Drawing.Point(699, 447);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(22, 15);
             this.label3.TabIndex = 19;
             this.label3.Text = "無";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(447, 415);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(57, 15);
+            this.label4.TabIndex = 20;
+            this.label4.Text = "ARGB =";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(862, 479);
+            this.ClientSize = new System.Drawing.Size(862, 477);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.label1);
@@ -239,6 +250,7 @@ namespace Auto_Fishing
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
     }
 }
 
