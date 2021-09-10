@@ -103,7 +103,7 @@ namespace Auto_Fishing
                     {
                         label3.Text = "無";
                         count++;
-                        if (count == 4) // 連續5個100毫秒做判定為不存在
+                        if (count == 4) // 連續4個100毫秒做判定為不存在
                         {
                             if (timer2.Enabled == false) //當timer2不在使用狀態，避免每0,5秒拋竿一次
                             {
