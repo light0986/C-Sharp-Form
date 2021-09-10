@@ -1,0 +1,29 @@
+1. 開啟Auto_Fishing.exe
+
+2. 開啟Minecraft
+
+3. 拿著魚竿，走到水邊，你覺得哪裡適合哪裡去，不要問我遊戲機制問題。
+
+4. pictrueBox1旁邊有個上下軸，可調整鎖定位置區域
+   (PS: 建議定在Minecraft鼠標中心附近)
+
+5. 回到Minecraft，拋竿。
+
+6. 按CTRL + F12截圖，然後收竿。
+   (若Minecraft內部按鍵設定相衝突與本程式無關)
+   
+7. pictrueBox2的截圖上，點擊想成為判定標準的顏色區塊。
+   
+8. 點擊後，你會看到下方白色區塊變色，他就是Golden Simple
+   (判定為Golden Simple的ARGB+-5的區塊，所以請自行修正，或許未來我會寫一個Machine learning版本的)
+   
+9. 色塊上方你會看到一個「有」與「無」的label.text在變換
+
+10.只要pictrueBox1上找不到該Golden Simple的Pixel，label就會改成無。反之為有。
+
+11.回到minecraft，按下CTRL+F11，就能開始你的釣魚工作了。
+
+12.收竿、拋竿，的時間參數若想調整，請調整numericUpDown，請自行尋找最適參數。
+   (最快為100毫秒 = 0.1秒，最慢為60000毫秒 = 1分鐘)
+   
+13.停止工作，再一次按下CTRL+F11就可以了。
