@@ -32,6 +32,7 @@ namespace Auto_Fishing
         private static int count = 0; //時間誤差
         private static int count2 = 0; //顏色跑掉校正回歸
         private static Color first_Color;
+        private static string first_Color_Type;
 
         CGlobalKeyboardHook _kbdHook = new CGlobalKeyboardHook(); //Class1
 
@@ -70,7 +71,9 @@ namespace Auto_Fishing
 
             bitmap2 = new Bitmap(global::Auto_Fishing.Properties.Resources.IMG_1833,pictureBox3.Size.Width, pictureBox3.Size.Height); //內建圖檔
             pictureBox3.Image = bitmap2;//防呆
-            label4.Text = "A=" + pictureBox2.BackColor.A.ToString() + ",R=" + pictureBox2.BackColor.R.ToString()+ ",G=" + pictureBox2.BackColor.G.ToString()+ ",B=" + pictureBox2.BackColor.B.ToString();
+            pictureBox4.Image = P4_Pro(count);
+            first_Color_Type = RGB_Cul(pictureBox2.BackColor, "C");
+            label4.Text = "色系: " + first_Color_Type + ". R: " + RGB_Cul(pictureBox2.BackColor, "R") + ",G: " + RGB_Cul(pictureBox2.BackColor, "G") + ",B: " + RGB_Cul(pictureBox2.BackColor, "B");
         }
 
         private void timer1_click(object sender, EventArgs e) //螢幕截圖 每100毫秒計算一次
@@ -101,11 +104,15 @@ namespace Auto_Fishing
                         label3.Text = "有";
                         count = 0;
                         count2 = 0;
+                        pictureBox4.Image = P4_Pro(count);
                     }
                     else
                     {
                         label3.Text = "無";
                         count++;
+                        if (count >= 4) { count = 4; }
+                        pictureBox4.Image = P4_Pro(count);
+
                         if (count == 4) // 連續4個100毫秒做判定為不存在
                         {
                             if (timer2.Enabled == false) //當timer2不在使用狀態，避免每0,5秒拋竿一次
@@ -120,11 +127,6 @@ namespace Auto_Fishing
                                     mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
                                 }
                             }
-                        }
-
-                        if(count > 7) //不讓你無限上綱加上去，防呆 {7 = 0111}
-                        {
-                            count = 6; //{6 = 0110} 沒有任何意義，只是我爽
                         }
                     }
                 }
@@ -145,7 +147,8 @@ namespace Auto_Fishing
                     if (ColorAEqualColorB(bit.GetPixel(i, j), pictureBox2.BackColor)) //個別pixel判斷
                     {
                         pictureBox2.BackColor = bit.GetPixel(i, j);
-                        label4.Text = "A=" + pictureBox2.BackColor.A.ToString() + ",R=" + pictureBox2.BackColor.R.ToString() + ",G=" + pictureBox2.BackColor.G.ToString() + ",B=" + pictureBox2.BackColor.B.ToString();
+                        if (RGB_Cul(pictureBox2.BackColor, "C") != first_Color_Type){ pictureBox2.BackColor = first_Color; } //避免顏色被帶太遠
+                        label4.Text = "色系: " + first_Color_Type + ". R: " + RGB_Cul(pictureBox2.BackColor, "R") + ",G: " + RGB_Cul(pictureBox2.BackColor, "G") + ",B: " + RGB_Cul(pictureBox2.BackColor, "B");
                         b = true;
                         break;
                     }
@@ -154,13 +157,47 @@ namespace Auto_Fishing
             return b;
         }
 
-        private bool ColorAEqualColorB(Color colorA, Color colorB, byte errorRange = 10) //找到的顏色,標準的顏色,容許誤差
+        private bool ColorAEqualColorB(Color colorA, Color colorB, byte errorRange = 15) //找到的顏色,標準的顏色,容許誤差
         {
             return colorA.A <= colorB.A + errorRange && colorA.A >= colorB.A - errorRange &&
                 colorA.R <= colorB.R + errorRange && colorA.R >= colorB.R - errorRange &&
                 colorA.G <= colorB.G + errorRange && colorA.G >= colorB.G - errorRange &&
                 colorA.B <= colorB.B + errorRange && colorA.B >= colorB.B - errorRange;
 
+        }
+
+        private Bitmap P4_Pro(int num)
+        {
+            Bitmap b = new Bitmap(pictureBox4.Size.Width,pictureBox4.Size.Height);
+            if (num == 1) { b = global::Auto_Fishing.Properties.Resources.P01; }
+            else if (num == 2) { b = global::Auto_Fishing.Properties.Resources.P02; }
+            else if (num == 3) { b = global::Auto_Fishing.Properties.Resources.P03; }
+            else if (num == 4) { b = global::Auto_Fishing.Properties.Resources.P04; }
+            else { b = global::Auto_Fishing.Properties.Resources.P00; }
+            return b;
+        }
+
+        private string RGB_Cul(Color c , String s)
+        {
+            if (s == "R") { return c.R.ToString(); }
+            else if (s == "G") { return c.G.ToString(); }
+            else if (s == "B") { return c.B.ToString(); }
+            else 
+            { 
+                int rg = c.R - c.G; int rb = c.R - c.B; int gb = c.G - c.B;
+                if(rg < 0) { rg = rg * -1; }
+                if (rb < 0) { rb = rb * -1; }
+                if (gb < 0) { gb = gb * -1; }
+                int a = rg + rb + gb; //避免RGB太過相似的誤差
+
+                if (c.R > c.G && c.R > c.B && c.G <=128 && c.B <= 128 && a >= 30) { return "紅棕"; }
+                else if(c.G > c.R && c.G > c.B && c.R <= 128 && c.B <= 128 && a >= 30) { return "茶綠"; }
+                else if (c.B > c.R && c.B > c.G && c.R <= 128 && c.G <= 128 && a >= 30) { return "藍靛"; }
+                else if (c.R < c.G && c.R < c.B && c.G >= 128 && c.B >= 128 && a >= 30) { return "青綠"; }
+                else if (c.G < c.R && c.G < c.B && c.R >= 128 && c.B >= 128 && a >= 30) { return "桃紫"; }
+                else if (c.B < c.R && c.B < c.G && c.R >= 128 && c.G >= 128 && a >= 30) { return "澄黃"; }
+                else { return "二質"; }
+            }
         }
 
         private void M_D(object sender, MouseEventArgs e) //pic2按下時
@@ -171,7 +208,8 @@ namespace Auto_Fishing
                 {
                     first_Color = bitmap2.GetPixel(e.X, e.Y);
                     pictureBox2.BackColor = first_Color;
-                    label4.Text = "A=" + pictureBox2.BackColor.A.ToString() + ",R=" + pictureBox2.BackColor.R.ToString() + ",G=" + pictureBox2.BackColor.G.ToString() + ",B=" + pictureBox2.BackColor.B.ToString();
+                    first_Color_Type = RGB_Cul(pictureBox2.BackColor, "C");
+                    label4.Text = "色系: " + first_Color_Type + ". R: " + RGB_Cul(pictureBox2.BackColor, "R") + ",G: " + RGB_Cul(pictureBox2.BackColor, "G") + ",B: " + RGB_Cul(pictureBox2.BackColor, "B");
                 }
             }
         }
@@ -182,9 +220,16 @@ namespace Auto_Fishing
             {
                 if (e.Button == MouseButtons.Left) //必須為左鍵
                 {
-                    first_Color = bitmap2.GetPixel(e.X, e.Y);
+                    int i = e.X; int j = e.Y; //超出範圍的防呆
+                    if(i < 0) { i = 0; }
+                    if(i > pictureBox3.Width -1) { i = pictureBox3.Width - 1; }
+                    if (j < 0) { j = 0; }
+                    if (j > pictureBox3.Height - 1) { j = pictureBox3.Height - 1; }
+
+                    first_Color = bitmap2.GetPixel(i, j);
                     pictureBox2.BackColor = first_Color;
-                    label4.Text = "A=" + pictureBox2.BackColor.A.ToString() + ",R=" + pictureBox2.BackColor.R.ToString() + ",G=" + pictureBox2.BackColor.G.ToString() + ",B=" + pictureBox2.BackColor.B.ToString();
+                    first_Color_Type = RGB_Cul(pictureBox2.BackColor, "C");
+                    label4.Text = "色系: " + first_Color_Type + ". R: " + RGB_Cul(pictureBox2.BackColor, "R") + ",G: " + RGB_Cul(pictureBox2.BackColor, "G") + ",B: " + RGB_Cul(pictureBox2.BackColor, "B");
                 }
             }
         }
@@ -226,6 +271,8 @@ namespace Auto_Fishing
             if(button2.Text == "開始(Ctrl+F11)") //開始工作
             {
                 button2.Text = "停止(Ctrl+F11)";
+                count = 0;
+                count2 = 0;
                 timer2.Enabled = true;
             }
             else
@@ -241,6 +288,7 @@ namespace Auto_Fishing
             {
                 count = 0; //時間誤差歸零
                 count2 = 0;
+                pictureBox4.Image = P4_Pro(count);
                 timer2.Enabled = false; //自我關閉
             }
             else
