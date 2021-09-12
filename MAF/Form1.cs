@@ -66,6 +66,7 @@ namespace Auto_Fishing
 
             numericUpDown1.Value = timer2.Interval; // 1.5秒
             numericUpDown2.Value = 30000; //30秒
+            numericUpDown3.Value = 5; //5次
 
             comboBox1.Items.Add("右鍵");
             comboBox1.Items.Add("左鍵");
@@ -103,12 +104,21 @@ namespace Auto_Fishing
                 {
                     if (get_bool(bitmap,pictureBox5.BackColor)) //開始工作時的判斷
                     {
+                        if (timer2.Enabled)
+                        {
+                            count--;
+                        }
+                        else
+                        {
+                            count = 0;
+                        }
                         label3.Text = "有";
-                        count = 0;
                         count2 = 0;
                         count3 = count3 + 100;
                         progressBar1.Value = count3;
                         pictureBox4.Image = P4_Pro(count); //人生跑馬燈龜苓膏
+
+
                     }
                     else
                     {
@@ -121,6 +131,7 @@ namespace Auto_Fishing
                         {
                             if (timer2.Enabled == false) //當timer2不在使用狀態，避免timer1與timer2產生衝突
                             {
+                                count2 = 0;
                                 timer2.Enabled = true; //使用timer2
                                 if (comboBox1.Text == "右鍵")
                                 {
@@ -257,11 +268,15 @@ namespace Auto_Fishing
             catch { numericUpDown1.Value = 1500; } //防呆，強迫可轉int32的資料型態
         }
 
-        private void num2_valuechange(object sender, EventArgs e) //numericUpDown1調整時 
+        private void num2_valuechange(object sender, EventArgs e) //numericUpDown2調整時 
         {
             progressBar1.Maximum = (int)numericUpDown2.Value;
         }
 
+        private void num3_valuechange(object sender, EventArgs e) //numericUpDown3調整時 
+        {
+            progressBar2.Maximum = (int)numericUpDown3.Value;
+        }
 
         private void key_D(object sender, KeyEventArgs e) //鍵盤按鍵控制
         {
@@ -303,11 +318,10 @@ namespace Auto_Fishing
 
         private void timer2_Tick(object sender, EventArgs e) //每(numericUpDown1.Value)毫秒觸發一次，1000毫秒 = 1秒
         {
-            if (label3.Text == "有")
+            if (count < 1)
             {
-                count = 0; //時間誤差歸零
                 count2 = 0;
-                pictureBox4.Image = P4_Pro(count);
+                progressBar2.Value = count2;
                 timer2.Enabled = false; //自我關閉
             }
             else
@@ -320,11 +334,17 @@ namespace Auto_Fishing
                 {
                     mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
                 }
-                count2++;
-                if(count2 == 5) //4次拋竿皆"無"
+
+                if (count2 == numericUpDown3.Value) //N次空拋竿表示還不穩定
                 {
                     pictureBox5.BackColor = pictureBox3.BackColor;
+                    count2 = 0;
                 }
+                else
+                {
+                    count2++;
+                }
+                progressBar2.Value = count2;
             }
         }
 
