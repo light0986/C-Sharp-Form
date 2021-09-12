@@ -31,7 +31,7 @@ namespace Auto_Fishing
         private static Size s; //畫布的大小定義
         private static int count = 0; //時間誤差
         private static int count2 = 0; //顏色跑掉校正回歸
-        private static Color first_Color;
+        private static int count3 = 0; //呆滯太久校正回歸
         private static string first_Color_Type;
 
         CGlobalKeyboardHook _kbdHook = new CGlobalKeyboardHook(); //Class1
@@ -64,16 +64,18 @@ namespace Auto_Fishing
             _kbdHook.KeyDown += key_D; //監視系統訊號是否可觸發CTRL + F12 = button1
             _kbdHook.KeyDown += K2_P; //監視系統訊號是否可觸發CTRL + F11 = button2
 
-            numericUpDown1.Value = timer2.Interval;
+            numericUpDown1.Value = timer2.Interval; // 1.5秒
+            numericUpDown2.Value = 30000; //30秒
+
             comboBox1.Items.Add("右鍵");
             comboBox1.Items.Add("左鍵");
             comboBox1.SelectedIndex = 0;
 
-            bitmap2 = new Bitmap(global::Auto_Fishing.Properties.Resources.IMG_1833,pictureBox3.Size.Width, pictureBox3.Size.Height); //內建圖檔
-            pictureBox3.Image = bitmap2;//防呆
+            bitmap2 = new Bitmap(global::Auto_Fishing.Properties.Resources.IMG_1833,pictureBox2.Size.Width, pictureBox2.Size.Height); //內建圖檔
+            pictureBox2.Image = bitmap2;//防呆
             pictureBox4.Image = P4_Pro(count);
-            first_Color_Type = RGB_Cul(pictureBox2.BackColor, "C");
-            label4.Text = "色系: " + first_Color_Type + ". R: " + RGB_Cul(pictureBox2.BackColor, "R") + ",G: " + RGB_Cul(pictureBox2.BackColor, "G") + ",B: " + RGB_Cul(pictureBox2.BackColor, "B");
+            first_Color_Type = RGB_Cul(pictureBox3.BackColor, "C");
+            label4.Text = "色系: " + first_Color_Type + ". R: " + RGB_Cul(pictureBox3.BackColor, "R") + ",G: " + RGB_Cul(pictureBox3.BackColor, "G") + ",B: " + RGB_Cul(pictureBox3.BackColor, "B");
         }
 
         private void timer1_click(object sender, EventArgs e) //螢幕截圖 每100毫秒計算一次
@@ -88,7 +90,7 @@ namespace Auto_Fishing
                 if (button2.Text == "開始(Ctrl+F11)") //尚未開始工作時
                 {
                     count = 0;
-                    if (get_bool(bitmap)) //還沒開始工作測試用
+                    if (get_bool(bitmap,pictureBox3.BackColor)) //還沒開始工作測試用
                     {
                         label3.Text = "有";
                     }
@@ -99,23 +101,25 @@ namespace Auto_Fishing
                 }
                 else //開始工作時
                 {
-                    if (get_bool(bitmap)) //開始工作時的判斷
+                    if (get_bool(bitmap,pictureBox5.BackColor)) //開始工作時的判斷
                     {
                         label3.Text = "有";
                         count = 0;
                         count2 = 0;
-                        pictureBox4.Image = P4_Pro(count);
+                        count3 = count3 + 100;
+                        progressBar1.Value = count3;
+                        pictureBox4.Image = P4_Pro(count); //人生跑馬燈龜苓膏
                     }
                     else
                     {
                         label3.Text = "無";
                         count++;
                         if (count >= 4) { count = 4; }
-                        pictureBox4.Image = P4_Pro(count);
+                        pictureBox4.Image = P4_Pro(count); //人生跑馬燈不是龜苓膏
 
                         if (count == 4) // 連續4個100毫秒做判定為不存在
                         {
-                            if (timer2.Enabled == false) //當timer2不在使用狀態，避免每0,5秒拋竿一次
+                            if (timer2.Enabled == false) //當timer2不在使用狀態，避免timer1與timer2產生衝突
                             {
                                 timer2.Enabled = true; //使用timer2
                                 if (comboBox1.Text == "右鍵")
@@ -129,6 +133,13 @@ namespace Auto_Fishing
                             }
                         }
                     }
+
+                    if(count3 == (int)numericUpDown2.Value) //呆滯校正
+                    {
+                        pictureBox5.BackColor = pictureBox3.BackColor;
+                        count3 = 0;
+                        progressBar1.Value = count3;
+                    }
                 }
             }
             catch
@@ -137,18 +148,21 @@ namespace Auto_Fishing
             }
         }
 
-        private bool get_bool(Bitmap bit) //整張圖判斷 = 個別pixel累積
+        private bool get_bool(Bitmap bit , Color color) //整張圖判斷 = 個別pixel累積
         {
             bool b = false;
             for(int j = 0; j < bit.Height; j++)
             {
                 for(int i = 0; i < bit.Width; i++)
                 {
-                    if (ColorAEqualColorB(bit.GetPixel(i, j), pictureBox2.BackColor)) //個別pixel判斷
+                    if (ColorAEqualColorB(bit.GetPixel(i, j), color)) //個別pixel判斷
                     {
-                        pictureBox2.BackColor = bit.GetPixel(i, j);
-                        if (RGB_Cul(pictureBox2.BackColor, "C") != first_Color_Type){ pictureBox2.BackColor = first_Color; } //避免顏色被帶太遠
-                        label4.Text = "色系: " + first_Color_Type + ". R: " + RGB_Cul(pictureBox2.BackColor, "R") + ",G: " + RGB_Cul(pictureBox2.BackColor, "G") + ",B: " + RGB_Cul(pictureBox2.BackColor, "B");
+                        if (button2.Text == "停止(Ctrl+F11)")
+                        {
+                            pictureBox5.BackColor = bit.GetPixel(i, j);
+                            if (RGB_Cul(pictureBox5.BackColor, "C") != first_Color_Type) { pictureBox5.BackColor = pictureBox3.BackColor; } //避免顏色被帶太遠
+                        }
+                        label4.Text = "色系: " + first_Color_Type + " R: " + RGB_Cul(pictureBox5.BackColor, "R") + ",G: " + RGB_Cul(pictureBox5.BackColor, "G") + ",B: " + RGB_Cul(pictureBox5.BackColor, "B");
                         b = true;
                         break;
                     }
@@ -166,7 +180,7 @@ namespace Auto_Fishing
 
         }
 
-        private Bitmap P4_Pro(int num)
+        private Bitmap P4_Pro(int num) //人生跑馬燈
         {
             Bitmap b = new Bitmap(pictureBox4.Size.Width,pictureBox4.Size.Height);
             if (num == 1) { b = global::Auto_Fishing.Properties.Resources.P01; }
@@ -177,7 +191,7 @@ namespace Auto_Fishing
             return b;
         }
 
-        private string RGB_Cul(Color c , String s)
+        private string RGB_Cul(Color c , String s) //RGB顏色分類
         {
             if (s == "R") { return c.R.ToString(); }
             else if (s == "G") { return c.G.ToString(); }
@@ -202,34 +216,34 @@ namespace Auto_Fishing
 
         private void M_D(object sender, MouseEventArgs e) //pic2按下時
         {
-            if (bitmap2 != null)
+            if (bitmap2 != null && button2.Text == "開始(Ctrl+F11)")
             {
                 if (e.Button == MouseButtons.Left) //必須為左鍵
                 {
-                    first_Color = bitmap2.GetPixel(e.X, e.Y);
-                    pictureBox2.BackColor = first_Color;
-                    first_Color_Type = RGB_Cul(pictureBox2.BackColor, "C");
-                    label4.Text = "色系: " + first_Color_Type + ". R: " + RGB_Cul(pictureBox2.BackColor, "R") + ",G: " + RGB_Cul(pictureBox2.BackColor, "G") + ",B: " + RGB_Cul(pictureBox2.BackColor, "B");
+                    pictureBox3.BackColor = bitmap2.GetPixel(e.X, e.Y);
+                    pictureBox5.BackColor = pictureBox3.BackColor;
+                    first_Color_Type = RGB_Cul(pictureBox3.BackColor, "C");
+                    label4.Text = "色系: " + first_Color_Type + " R: " + RGB_Cul(pictureBox3.BackColor, "R") + ",G: " + RGB_Cul(pictureBox3.BackColor, "G") + ",B: " + RGB_Cul(pictureBox3.BackColor, "B");
                 }
             }
         }
 
         private void M_M(object sender, MouseEventArgs e) //pic2按住並移動時
         {
-            if(bitmap2 != null)
+            if(bitmap2 != null && button2.Text == "開始(Ctrl+F11)")
             {
                 if (e.Button == MouseButtons.Left) //必須為左鍵
                 {
                     int i = e.X; int j = e.Y; //超出範圍的防呆
                     if(i < 0) { i = 0; }
-                    if(i > pictureBox3.Width -1) { i = pictureBox3.Width - 1; }
+                    if(i > pictureBox2.Width -1) { i = pictureBox2.Width - 1; }
                     if (j < 0) { j = 0; }
-                    if (j > pictureBox3.Height - 1) { j = pictureBox3.Height - 1; }
+                    if (j > pictureBox2.Height - 1) { j = pictureBox2.Height - 1; }
 
-                    first_Color = bitmap2.GetPixel(i, j);
-                    pictureBox2.BackColor = first_Color;
-                    first_Color_Type = RGB_Cul(pictureBox2.BackColor, "C");
-                    label4.Text = "色系: " + first_Color_Type + ". R: " + RGB_Cul(pictureBox2.BackColor, "R") + ",G: " + RGB_Cul(pictureBox2.BackColor, "G") + ",B: " + RGB_Cul(pictureBox2.BackColor, "B");
+                    pictureBox3.BackColor = bitmap2.GetPixel(i, j);
+                    pictureBox5.BackColor = pictureBox3.BackColor;
+                    first_Color_Type = RGB_Cul(pictureBox3.BackColor, "C");
+                    label4.Text = "色系: " + first_Color_Type + " R: " + RGB_Cul(pictureBox3.BackColor, "R") + ",G: " + RGB_Cul(pictureBox3.BackColor, "G") + ",B: " + RGB_Cul(pictureBox3.BackColor, "B");
                 }
             }
         }
@@ -243,6 +257,12 @@ namespace Auto_Fishing
             catch { numericUpDown1.Value = 1500; } //防呆，強迫可轉int32的資料型態
         }
 
+        private void num2_valuechange(object sender, EventArgs e) //numericUpDown1調整時 
+        {
+            progressBar1.Maximum = (int)numericUpDown2.Value;
+        }
+
+
         private void key_D(object sender, KeyEventArgs e) //鍵盤按鍵控制
         {
             if(e.Control == true && e.KeyCode == Keys.F12) //CTRL + F12 
@@ -254,8 +274,7 @@ namespace Auto_Fishing
         private void button1_Click(object sender, EventArgs e) //我是buttton1
         {
             bitmap2 = new Bitmap(bitmap);
-            pictureBox3.Image = bitmap2; //截圖
-            label2.Text = "鎖定顏色:";
+            pictureBox2.Image = bitmap2; //截圖
         }
 
         private void K2_P(object sender, KeyEventArgs e) //鍵盤按鍵控制button2觸發
@@ -302,10 +321,19 @@ namespace Auto_Fishing
                     mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
                 }
                 count2++;
-                if(count2 == 5) //4次拋竿皆無
+                if(count2 == 5) //4次拋竿皆"無"
                 {
-                    pictureBox2.BackColor = first_Color;
+                    pictureBox5.BackColor = pictureBox3.BackColor;
                 }
+            }
+        }
+
+        private void label3_textchange(object sender, EventArgs e) //沒有呆滯時
+        {
+            if(button2.Text == "停止(Ctrl+F11)") //關注開始工作後
+            {
+                count3 = 0;
+                progressBar1.Value = count3;
             }
         }
 

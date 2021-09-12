@@ -47,11 +47,18 @@ namespace Auto_Fishing
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.label5 = new System.Windows.Forms.Label();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -72,7 +79,7 @@ namespace Auto_Fishing
             // 
             this.button1.Location = new System.Drawing.Point(450, 442);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(123, 25);
+            this.button1.Size = new System.Drawing.Size(123, 56);
             this.button1.TabIndex = 2;
             this.button1.Text = "截圖(Ctrl+F12)";
             this.button1.UseVisualStyleBackColor = true;
@@ -89,22 +96,24 @@ namespace Auto_Fishing
             // 
             // pictureBox2
             // 
-            this.pictureBox2.BackColor = System.Drawing.Color.White;
-            this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox2.Location = new System.Drawing.Point(665, 442);
+            this.pictureBox2.BackColor = System.Drawing.SystemColors.Control;
+            this.pictureBox2.Location = new System.Drawing.Point(450, 12);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(28, 23);
+            this.pictureBox2.Size = new System.Drawing.Size(400, 400);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 7;
             this.pictureBox2.TabStop = false;
+            this.pictureBox2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.M_D);
+            this.pictureBox2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.M_M);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(579, 447);
+            this.label2.Location = new System.Drawing.Point(579, 444);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(76, 15);
+            this.label2.Size = new System.Drawing.Size(71, 15);
             this.label2.TabIndex = 8;
-            this.label2.Text = "牠叫Mui仔";
+            this.label2.Text = "校正顏色:";
             // 
             // vScrollBar1
             // 
@@ -116,20 +125,19 @@ namespace Auto_Fishing
             // 
             // pictureBox3
             // 
-            this.pictureBox3.Location = new System.Drawing.Point(450, 12);
+            this.pictureBox3.BackColor = System.Drawing.Color.White;
+            this.pictureBox3.Location = new System.Drawing.Point(656, 442);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(400, 400);
+            this.pictureBox3.Size = new System.Drawing.Size(25, 25);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox3.TabIndex = 13;
             this.pictureBox3.TabStop = false;
-            this.pictureBox3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.M_D);
-            this.pictureBox3.MouseMove += new System.Windows.Forms.MouseEventHandler(this.M_M);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(727, 442);
+            this.button2.Location = new System.Drawing.Point(718, 442);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(123, 25);
+            this.button2.Size = new System.Drawing.Size(132, 56);
             this.button2.TabIndex = 14;
             this.button2.Text = "開始(Ctrl+F11)";
             this.button2.UseVisualStyleBackColor = true;
@@ -146,9 +154,9 @@ namespace Auto_Fishing
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.ItemHeight = 15;
-            this.comboBox1.Location = new System.Drawing.Point(191, 442);
+            this.comboBox1.Location = new System.Drawing.Point(262, 442);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(100, 23);
+            this.comboBox1.Size = new System.Drawing.Size(79, 23);
             this.comboBox1.TabIndex = 15;
             // 
             // label1
@@ -156,9 +164,9 @@ namespace Auto_Fishing
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(118, 447);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(67, 15);
+            this.label1.Size = new System.Drawing.Size(82, 15);
             this.label1.TabIndex = 17;
-            this.label1.Text = "毫秒點擊";
+            this.label1.Text = "每毫秒點擊";
             // 
             // numericUpDown1
             // 
@@ -186,16 +194,17 @@ namespace Auto_Fishing
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(699, 447);
+            this.label3.Location = new System.Drawing.Point(687, 475);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(22, 15);
             this.label3.TabIndex = 19;
             this.label3.Text = "無";
+            this.label3.TextChanged += new System.EventHandler(this.label3_textchange);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(447, 415);
+            this.label4.Location = new System.Drawing.Point(457, 420);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(57, 15);
             this.label4.TabIndex = 20;
@@ -203,18 +212,86 @@ namespace Auto_Fishing
             // 
             // pictureBox4
             // 
-            this.pictureBox4.Location = new System.Drawing.Point(297, 447);
+            this.pictureBox4.Location = new System.Drawing.Point(347, 447);
             this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(115, 15);
+            this.pictureBox4.Size = new System.Drawing.Size(73, 15);
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox4.TabIndex = 21;
             this.pictureBox4.TabStop = false;
+            // 
+            // numericUpDown2
+            // 
+            this.numericUpDown2.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Location = new System.Drawing.Point(12, 473);
+            this.numericUpDown2.Maximum = new decimal(new int[] {
+            300000,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.Size = new System.Drawing.Size(100, 25);
+            this.numericUpDown2.TabIndex = 22;
+            this.numericUpDown2.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.numericUpDown2.ValueChanged += new System.EventHandler(this.num2_valuechange);
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(262, 473);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(158, 25);
+            this.progressBar1.TabIndex = 23;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(118, 475);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(127, 15);
+            this.label5.TabIndex = 24;
+            this.label5.Text = "毫秒呆滯自動校正";
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.BackColor = System.Drawing.Color.White;
+            this.pictureBox5.Location = new System.Drawing.Point(656, 473);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(25, 25);
+            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox5.TabIndex = 25;
+            this.pictureBox5.TabStop = false;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(579, 475);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(71, 15);
+            this.label6.TabIndex = 26;
+            this.label6.Text = "當下顏色:";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(862, 477);
+            this.ClientSize = new System.Drawing.Size(862, 510);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.pictureBox5);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.numericUpDown2);
             this.Controls.Add(this.pictureBox4);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -233,7 +310,7 @@ namespace Auto_Fishing
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Mincraft Auto Fishing -- by light0986";
+            this.Text = "Mincraft Auto Fishing -- by light0986  v1.02";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.F_Closing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.key_D);
@@ -242,6 +319,8 @@ namespace Auto_Fishing
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -265,6 +344,11 @@ namespace Auto_Fishing
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.Label label6;
     }
 }
 
