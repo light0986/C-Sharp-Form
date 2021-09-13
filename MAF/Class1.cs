@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -117,6 +121,76 @@ namespace CopyAndPaste
             else if (color.G < color.R && color.G < color.B && color.R >= 128 && color.B >= 128 && a >= 30) { return "桃紫"; }
             else if (color.B < color.R && color.B < color.G && color.R >= 128 && color.G >= 128 && a >= 30) { return "澄黃"; }
             else { return "二質"; }
+        }
+    }
+
+    class AppUdate
+    {
+        private string sources_file = Application.ExecutablePath; //完整路徑
+        private string defualt_path = Application.StartupPath + "\\App_DownLoad.exe";
+
+        public bool PingTest() //Ping Github
+        {
+            System.Net.NetworkInformation.Ping ping = new System.Net.NetworkInformation.Ping();
+
+            System.Net.NetworkInformation.PingReply pingStatus = ping.Send(IPAddress.Parse("140.82.114.4"), 1000);
+
+            if (pingStatus.Status == System.Net.NetworkInformation.IPStatus.Success)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public object Check()
+        {
+            try
+            {
+                object version = "";
+                WebRequest request = WebRequest.Create("https://raw.githubusercontent.com/light0986/C-Sharp-Form/main/MAF/Version.txt");
+                WebResponse response = request.GetResponse();
+                Stream datastream = response.GetResponseStream(); 
+                Encoding ec = Encoding.UTF8;
+                StreamReader reader = new StreamReader(datastream, ec);
+                version = reader.ReadLine();
+                reader.Close();
+                datastream.Close();
+                response.Close();
+                return version;
+            }
+            catch { return "err"; }
+        }
+
+        public void AutoRun()
+        {
+            try
+            {
+                WebClient wc = new WebClient();
+                wc.DownloadFile("https://github.com/light0986/C-Sharp-Form/raw/main/MAF/App_DownLoad.exe", defualt_path); //下載安裝檔
+                FileInfo fileInfo = new FileInfo(defualt_path);
+                fileInfo.Attributes = FileAttributes.Hidden;
+
+                Process P_new = new Process();
+                P_new.StartInfo = new ProcessStartInfo("cmd.exe", "/C choice /C Y /N /D Y /T 1 & " + "\"" + defualt_path + "\""); //排成執行安裝檔
+                P_new.StartInfo.CreateNoWindow = true;
+                P_new.StartInfo.UseShellExecute = false;
+                P_new.Start();
+
+                Process P_sources = new Process();
+                P_sources.StartInfo = new ProcessStartInfo("cmd.exe", "/C choice /C Y /N /D Y /T 1 & Del " + "\"" + sources_file + "\""); //舊檔案自殺
+                P_sources.StartInfo.CreateNoWindow = true;
+                P_sources.StartInfo.UseShellExecute = false;
+                P_sources.Start();
+
+                Application.Exit();
+            }
+            catch
+            {
+
+            }
         }
     }
 }
