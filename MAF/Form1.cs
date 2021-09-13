@@ -75,8 +75,10 @@ namespace Auto_Fishing
             bitmap2 = new Bitmap(global::Auto_Fishing.Properties.Resources.IMG_1833,pictureBox2.Size.Width, pictureBox2.Size.Height); //內建圖檔
             pictureBox2.Image = bitmap2;//防呆
             pictureBox4.Image = P4_Pro(count);
-            first_Color_Type = RGB_Cul(pictureBox3.BackColor, "C");
-            label4.Text = "色系: " + first_Color_Type + ". R: " + RGB_Cul(pictureBox3.BackColor, "R") + ",G: " + RGB_Cul(pictureBox3.BackColor, "G") + ",B: " + RGB_Cul(pictureBox3.BackColor, "B");
+
+            ColorType colorType = new ColorType();
+            first_Color_Type = colorType.TypeName(pictureBox3.BackColor);
+            label4.Text = "色系: " + first_Color_Type + " R: " + pictureBox5.BackColor.R + ",G: " + pictureBox5.BackColor.G + ",B: " + pictureBox5.BackColor.B;
         }
 
         private void timer1_click(object sender, EventArgs e) //螢幕截圖 每100毫秒計算一次
@@ -162,6 +164,7 @@ namespace Auto_Fishing
         private bool get_bool(Bitmap bit , Color color) //整張圖判斷 = 個別pixel累積
         {
             bool b = false;
+            ColorType colorType = new ColorType();
             for(int j = 0; j < bit.Height; j++)
             {
                 for(int i = 0; i < bit.Width; i++)
@@ -171,9 +174,9 @@ namespace Auto_Fishing
                         if (button2.Text == "停止(Ctrl+F11)")
                         {
                             pictureBox5.BackColor = bit.GetPixel(i, j);
-                            if (RGB_Cul(pictureBox5.BackColor, "C") != first_Color_Type) { pictureBox5.BackColor = pictureBox3.BackColor; } //避免顏色被帶太遠
+                            if ( colorType.TypeName(pictureBox5.BackColor) != first_Color_Type) { pictureBox5.BackColor = pictureBox3.BackColor; } //避免顏色被帶太遠
                         }
-                        label4.Text = "色系: " + first_Color_Type + " R: " + RGB_Cul(pictureBox5.BackColor, "R") + ",G: " + RGB_Cul(pictureBox5.BackColor, "G") + ",B: " + RGB_Cul(pictureBox5.BackColor, "B");
+                        label4.Text = "色系: " + first_Color_Type + " R: " + pictureBox5.BackColor.R + ",G: " + pictureBox5.BackColor.G + ",B: " + pictureBox5.BackColor.B;
                         b = true;
                         break;
                     }
@@ -202,29 +205,6 @@ namespace Auto_Fishing
             return b;
         }
 
-        private string RGB_Cul(Color c , String s) //RGB顏色分類
-        {
-            if (s == "R") { return c.R.ToString(); }
-            else if (s == "G") { return c.G.ToString(); }
-            else if (s == "B") { return c.B.ToString(); }
-            else 
-            { 
-                int rg = c.R - c.G; int rb = c.R - c.B; int gb = c.G - c.B;
-                if(rg < 0) { rg = rg * -1; }
-                if (rb < 0) { rb = rb * -1; }
-                if (gb < 0) { gb = gb * -1; }
-                int a = rg + rb + gb; //避免RGB太過相似的誤差
-
-                if (c.R > c.G && c.R > c.B && c.G <=128 && c.B <= 128 && a >= 30) { return "紅棕"; }
-                else if(c.G > c.R && c.G > c.B && c.R <= 128 && c.B <= 128 && a >= 30) { return "茶綠"; }
-                else if (c.B > c.R && c.B > c.G && c.R <= 128 && c.G <= 128 && a >= 30) { return "藍靛"; }
-                else if (c.R < c.G && c.R < c.B && c.G >= 128 && c.B >= 128 && a >= 30) { return "青綠"; }
-                else if (c.G < c.R && c.G < c.B && c.R >= 128 && c.B >= 128 && a >= 30) { return "桃紫"; }
-                else if (c.B < c.R && c.B < c.G && c.R >= 128 && c.G >= 128 && a >= 30) { return "澄黃"; }
-                else { return "二質"; }
-            }
-        }
-
         private void M_D(object sender, MouseEventArgs e) //pic2按下時
         {
             if (bitmap2 != null && button2.Text == "開始(Ctrl+F11)")
@@ -233,8 +213,10 @@ namespace Auto_Fishing
                 {
                     pictureBox3.BackColor = bitmap2.GetPixel(e.X, e.Y);
                     pictureBox5.BackColor = pictureBox3.BackColor;
-                    first_Color_Type = RGB_Cul(pictureBox3.BackColor, "C");
-                    label4.Text = "色系: " + first_Color_Type + " R: " + RGB_Cul(pictureBox3.BackColor, "R") + ",G: " + RGB_Cul(pictureBox3.BackColor, "G") + ",B: " + RGB_Cul(pictureBox3.BackColor, "B");
+
+                    ColorType colorType = new ColorType();
+                    first_Color_Type = colorType.TypeName(pictureBox3.BackColor);
+                    label4.Text = "色系: " + first_Color_Type + " R: " + pictureBox5.BackColor.R + ",G: " + pictureBox5.BackColor.G + ",B: " + pictureBox5.BackColor.B;
                 }
             }
         }
@@ -253,8 +235,10 @@ namespace Auto_Fishing
 
                     pictureBox3.BackColor = bitmap2.GetPixel(i, j);
                     pictureBox5.BackColor = pictureBox3.BackColor;
-                    first_Color_Type = RGB_Cul(pictureBox3.BackColor, "C");
-                    label4.Text = "色系: " + first_Color_Type + " R: " + RGB_Cul(pictureBox3.BackColor, "R") + ",G: " + RGB_Cul(pictureBox3.BackColor, "G") + ",B: " + RGB_Cul(pictureBox3.BackColor, "B");
+
+                    ColorType colorType = new ColorType();
+                    first_Color_Type = colorType.TypeName(pictureBox3.BackColor);
+                    label4.Text = "色系: " + first_Color_Type + " R: " + pictureBox5.BackColor.R + ",G: " + pictureBox5.BackColor.G + ",B: " + pictureBox5.BackColor.B;
                 }
             }
         }

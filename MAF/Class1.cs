@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -97,5 +98,25 @@ namespace CopyAndPaste
             return CallNextHookEx(hhook, code, wParam, ref IParam);
         }
 
+    }
+
+    class ColorType
+    {
+        public string TypeName(Color color)
+        {
+            int rg = color.R - color.G; int rb = color.R - color.B; int gb = color.G - color.B;
+            if (rg < 0) { rg = rg * -1; }
+            if (rb < 0) { rb = rb * -1; }
+            if (gb < 0) { gb = gb * -1; }
+            int a = rg + rb + gb; //避免RGB太過相似的誤差
+
+            if (color.R > color.G && color.R > color.B && color.G <= 128 && color.B <= 128 && a >= 30) { return "紅棕"; }
+            else if (color.G > color.R && color.G > color.B && color.R <= 128 && color.B <= 128 && a >= 30) { return "茶綠"; }
+            else if (color.B > color.R && color.B > color.G && color.R <= 128 && color.G <= 128 && a >= 30) { return "藍靛"; }
+            else if (color.R < color.G && color.R < color.B && color.G >= 128 && color.B >= 128 && a >= 30) { return "青綠"; }
+            else if (color.G < color.R && color.G < color.B && color.R >= 128 && color.B >= 128 && a >= 30) { return "桃紫"; }
+            else if (color.B < color.R && color.B < color.G && color.R >= 128 && color.G >= 128 && a >= 30) { return "澄黃"; }
+            else { return "二質"; }
+        }
     }
 }
