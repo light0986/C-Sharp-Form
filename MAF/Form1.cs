@@ -34,12 +34,7 @@ namespace Auto_Fishing
         private static int count3 = 0; //呆滯太久校正回歸
         private static string first_Color_Type;
 
-        CGlobalKeyboardHook _kbdHook = new CGlobalKeyboardHook(); //Class1
-
-        //[DllImport("user32.dll", EntryPoint = "SetCursorPos")]
-        //[return: MarshalAs(UnmanagedType.Bool)]
-        //private static extern bool SetCursorPos(int x, int y); 
-        //滑鼠強制移動到畫面該位置，目前沒有用
+        CGlobalKeyboardHook _kbdHook = new CGlobalKeyboardHook(); //監聽
 
         [DllImport("user32", CharSet = CharSet.Unicode)]
         private static extern int mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo); //模擬滑鼠訊號 
@@ -75,6 +70,9 @@ namespace Auto_Fishing
             bitmap2 = new Bitmap(global::Auto_Fishing.Properties.Resources.IMG_1833,pictureBox2.Size.Width, pictureBox2.Size.Height); //內建圖檔
             pictureBox2.Image = bitmap2;//防呆
             pictureBox4.Image = P4_Pro(count);
+
+            pictureBox3.BackColor = Properties.Settings.Default.C;
+            pictureBox5.BackColor = Properties.Settings.Default.C; //存檔點讀取，關機調程式後，下次打開，紀錄還在。
 
             ColorType colorType = new ColorType();
             first_Color_Type = colorType.TypeName(pictureBox3.BackColor);
@@ -211,8 +209,11 @@ namespace Auto_Fishing
             {
                 if (e.Button == MouseButtons.Left) //必須為左鍵
                 {
-                    pictureBox3.BackColor = bitmap2.GetPixel(e.X, e.Y);
-                    pictureBox5.BackColor = pictureBox3.BackColor;
+                    Properties.Settings.Default.C = bitmap2.GetPixel(e.X, e.Y);
+                    Properties.Settings.Default.Save();//存檔點讀取，關機調程式後，下次打開，紀錄還在。
+
+                    pictureBox3.BackColor = Properties.Settings.Default.C;
+                    pictureBox5.BackColor = Properties.Settings.Default.C;
 
                     ColorType colorType = new ColorType();
                     first_Color_Type = colorType.TypeName(pictureBox3.BackColor);
@@ -233,14 +234,23 @@ namespace Auto_Fishing
                     if (j < 0) { j = 0; }
                     if (j > pictureBox2.Height - 1) { j = pictureBox2.Height - 1; }
 
-                    pictureBox3.BackColor = bitmap2.GetPixel(i, j);
-                    pictureBox5.BackColor = pictureBox3.BackColor;
+                    pictureBox3.BackColor = bitmap2.GetPixel(e.X, e.Y);
+                    pictureBox5.BackColor = bitmap2.GetPixel(e.X, e.Y);
 
                     ColorType colorType = new ColorType();
                     first_Color_Type = colorType.TypeName(pictureBox3.BackColor);
                     label4.Text = "色系: " + first_Color_Type + " R: " + pictureBox5.BackColor.R + ",G: " + pictureBox5.BackColor.G + ",B: " + pictureBox5.BackColor.B;
                 }
             }
+        }
+
+        private void M_U(object sender, MouseEventArgs e)
+        {
+            Properties.Settings.Default.C = bitmap2.GetPixel(e.X, e.Y);
+            Properties.Settings.Default.Save(); //存檔點讀取，關機調程式後，下次打開，紀錄還在。
+
+            pictureBox3.BackColor = Properties.Settings.Default.C;
+            pictureBox5.BackColor = Properties.Settings.Default.C;
         }
 
         private void num_vc(object sender, EventArgs e) //numericUpDown1調整時
