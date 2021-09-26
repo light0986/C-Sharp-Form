@@ -25,10 +25,11 @@ namespace CopyAndPaste
         [DllImport("user32.dll")]
         static extern short GetKeyState(int nCode);
         [DllImport("kernel32.dll")]
-        static extern IntPtr LoadLibrary(string IpFileName);
+        static extern IntPtr LoadLibrary(string IpFileName);   // 라이브러리 등록
 
         public delegate int keyboardHookProc(int code, int wParam, ref keyboardHookStruct IParam);     // callback Delegate
 
+        // keyboardHookStruct 구조체 정의
         public struct keyboardHookStruct
         {
             public int vkCode;
@@ -38,6 +39,7 @@ namespace CopyAndPaste
             public int dwExtraInfo;
         }
 
+        // 정의 되어 있는 상수 값
         const int VK_SHIFT = 0x10;
         const int VK_CONTROL = 0x11;
         const int VK_MENU = 0x12;
@@ -124,15 +126,10 @@ namespace CopyAndPaste
 
     class AppUdate
     {
-        private string sources_file = Application.ExecutablePath; //完整路徑
-        private string defualt_path = Application.StartupPath + "\\App_DownLoad.exe";
-
         public bool PingTest() //Ping Github
         {
             System.Net.NetworkInformation.Ping ping = new System.Net.NetworkInformation.Ping();
-
             System.Net.NetworkInformation.PingReply pingStatus = ping.Send(IPAddress.Parse("140.82.114.4"), 1000);
-
             if (pingStatus.Status == System.Net.NetworkInformation.IPStatus.Success)
             {
                 return true;
@@ -162,14 +159,16 @@ namespace CopyAndPaste
             catch { return "err"; }
         }
 
+        private string sources_file = Application.ExecutablePath; //完整路徑
+        private string defualt_path = Application.StartupPath + "\\App_DownLoad.exe";
+
+
         public void AutoRun()
         {
             try
             {
                 WebClient wc = new WebClient();
                 wc.DownloadFile("https://github.com/light0986/C-Sharp-Form/raw/main/MAF/App_DownLoad.exe", defualt_path); //下載安裝檔
-                FileInfo fileInfo = new FileInfo(defualt_path);
-                fileInfo.Attributes = FileAttributes.Hidden;
 
                 Process P_new = new Process();
                 P_new.StartInfo = new ProcessStartInfo("cmd.exe", "/C choice /C Y /N /D Y /T 1 & " + "\"" + defualt_path + "\""); //排成執行安裝檔

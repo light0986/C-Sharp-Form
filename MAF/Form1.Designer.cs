@@ -109,6 +109,7 @@ namespace Auto_Fishing
             this.pictureBox2.TabStop = false;
             this.pictureBox2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.M_D);
             this.pictureBox2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.M_M);
+            this.pictureBox2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.M_U);
             // 
             // label2
             // 
@@ -150,7 +151,7 @@ namespace Auto_Fishing
             // 
             // timer2
             // 
-            this.timer2.Interval = 1500;
+            this.timer2.Interval = 2000;
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
             // comboBox1

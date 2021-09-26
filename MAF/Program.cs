@@ -17,16 +17,6 @@ namespace Auto_Fishing
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-
-            AppUdate appUdate = new AppUdate();
-            if (appUdate.PingTest())
-            {
-                if (appUdate.Check().ToString() != global::Auto_Fishing.Properties.Resources.version_string)
-                {
-                    appUdate.AutoRun();
-                }
-            }
             Application.Run(new Form1());
         }
     }
