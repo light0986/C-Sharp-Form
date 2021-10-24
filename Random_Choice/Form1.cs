@@ -56,7 +56,7 @@ namespace Random_Choice
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if(timer1.Enabled == false)
+            if(timer1.Enabled == false && listBox1.Items.Count != 0)
             {
                 team_num = 0;
                 progressBar1.Maximum = listBox1.Items.Count;
