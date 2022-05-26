@@ -1,0 +1,9 @@
+C:\Users\user\Desktop\物流生產履歷系統\IIS監控重啟器\IISMonotor.exe
+C:\Users\user\Desktop\物流生產履歷系統\IIS監控重啟器\IISMonotor.dll
+C:\Users\user\Desktop\物流生產履歷系統\IIS監控重啟器\IISMonotor.deps.json
+C:\Users\user\Desktop\物流生產履歷系統\IIS監控重啟器\IISMonotor.runtimeconfig.json
+C:\Users\user\Desktop\物流生產履歷系統\IIS監控重啟器\IISMonotor.pdb
+C:\Users\user\Desktop\物流生產履歷系統\IIS監控重啟器\Microsoft.Web.Administration.dll
+C:\Users\user\Desktop\物流生產履歷系統\IIS監控重啟器\nunit.framework.dll
+C:\Users\user\Desktop\物流生產履歷系統\IIS監控重啟器\runtimes\unix\lib\netstandard1.5\System.ServiceProcess.ServiceController.dll
+C:\Users\user\Desktop\物流生產履歷系統\IIS監控重啟器\runtimes\win\lib\netstandard1.5\System.ServiceProcess.ServiceController.dll
