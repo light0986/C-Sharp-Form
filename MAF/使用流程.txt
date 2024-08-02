@@ -4,7 +4,7 @@
 
 3. 拿著魚竿，走到你喜歡的水邊。
 
-4. 「Auto_Fishing」: 左邊畫面右邊與下方，有個hScrollBar跟vScrollBar，可調整畫面要鎖定的位置區域
+4. 回到「Auto_Fishing」: 左邊畫面右邊與下方，有個hScrollBar跟vScrollBar，可調整畫面要鎖定的位置區域
    (PS: 建議定在Minecraft鼠標中心附近)
 
 5. 回到「Minecraft」: 拋竿=右鍵。讓浮標丟出去，要抓取浮標的特徵顏色。
@@ -12,7 +12,7 @@
 6. 按CTRL + F12截圖，然後收竿。
    (若Minecraft內部按鍵設定相衝突與本程式無關)
    
-7. 「Auto_Fishing」: 右邊畫面上的截圖，點擊想成為判定標準的顏色區塊。
+7. 回到「Auto_Fishing」: 右邊畫面上的截圖，點擊想成為判定標準的顏色區塊。
    
 8. 點擊後，你會看到下方兩個白色區塊變色，上面就是Golden Simple，下面就是開始工作後追蹤的實際顏色。
    
